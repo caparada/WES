@@ -1,0 +1,15 @@
+# Script to perform quality control on a FASTQ file
+#!/bin/bash
+
+# Set up paths
+fastqc='/scratch/5283180/tools/FastQC' # path to the fastqc tool
+path_fastq='/scratch/5283180/wgs_test/sra_fastq' # path to your fastq files
+outdir='/scratch/5283180/wgs_test/fastqc_output' # output directory
+
+# Set up variables
+threads=20 
+accession=$1 
+
+# Run FASTQC in the forward and reverse FASTQs
+$fastqc/fastqc --outdir $outdir --noextract --nogroup --threads $threads -f fastq $path_fastq/${accession}_1.fastq
+$fastqc/fastqc --outdir $outdir --noextract --nogroup --threads $threads -f fastq $path_fastq/${accession}_2.fastq

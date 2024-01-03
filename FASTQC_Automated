@@ -1,0 +1,16 @@
+# Script to perform quality control on a list of FASTQ files
+#!/bin/bash
+
+# Set up paths
+fastqc='/scratch/5283180/tools/FastQC' # path to the fastqc tool
+outdir='/scratch/5283180/wgs_test/fastqc_output' # output directory
+ 
+# Set up variables
+threads=20
+SRR=$1 # Create a variable that will read indice 1
+SRR2=$SRR # Create a second variable that call the value of the first variable
+# NR will call the final variable
+ACCESSION=$(ls /scratch/5283180/wgs_test/sra_fastq/*.fastq | awk -v SRR2=$SRR 'NR==SRR2')  
+
+# Run FASTQC in the forward and reverse FASTQs of a list of files in /scratch/5283180/wgs_test/sra_fastq
+$fastqc/fastqc --outdir $outdir --noextract --nogroup --threads $threads -f fastq ${ACCESSION}
